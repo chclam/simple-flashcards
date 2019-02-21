@@ -1,7 +1,12 @@
+<!-- 
+Author: Chris Lam
+Github: https://github.com/chclam
+  -->
+
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Bootleg WRTS! Woordjes leren, bitch.</title>
+		<title>Simple Flashcards</title>
 		<link rel="stylesheet" type="text/css" href="./style.css">
 		<script type="text/javascript" src="./index.js"></script>
 	</head>
@@ -9,7 +14,7 @@
 		<div>
 			<div>
 				<div id="questionIndex">
-					<a href="#">1</a>
+					<a href="#" onclick="openQuestion(0); return false;">1</a>
 				</div>
 				<p id="text1">Enter your question!</p>
 				<textarea id="inputArea" rows='20' cols='60'></textarea>
@@ -28,26 +33,27 @@
 						- Limit question index to at most 3.
 							parenNode.childElementCount, returns the amount of child elements.
 				*/
+				let newQuestionIndex = getQuestionIndex();
 				let element = document.getElementById("questionIndex");
 				let qRef = document.createElement("a");
-				let qIndex = document.createTextNode(getQuestionIndex() + 1);
+				let qIndex = document.createTextNode(newQuestionIndex + 1);
 				qRef.setAttribute("href", "#");
+				qRef.setAttribute("onclick", "openQuestion(" + newQuestionIndex + ")");
 				qRef.appendChild(qIndex);
 				element.appendChild(qRef);
 			}
 
 
-			function openQuestion(){
-
+			function openQuestion(indexNumber){
+				question = getQuestion(indexNumber);
+				if (question){
+					document.getElementById("inputArea").value = getQuestion(indexNumber)
+				}
 			}
 		</script>
 	</body>
 	<footer>
-	<p>Copyright © Chris Lam 
-		<script>
-			let date = new Date;
-			document.write(date.getFullYear());
-		</script>
+	<p>Copyright © Chris Lam 2019
 	</p>
 </footer>
 </html> 

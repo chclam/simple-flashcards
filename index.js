@@ -1,5 +1,7 @@
-// this is a comment.
-// js has undefined, null, boolean, string, symbol, number and object.
+/*
+Author: Chris Lam
+Github: https://github.com/chclam
+*/
 
 var questions = [];
 var questionIndex = 0;
@@ -10,10 +12,6 @@ function changeText(){
 	}
 	let i = Math.floor(Math.random() * questions.length);
 	return questions[i];
-}
-
-function getQuestions(){
-	return questions;
 }
 
 function getQuestion(inquiredIndex){
@@ -32,4 +30,8 @@ function addQuestion(newQuestion){
 
 function getQuestionIndex(){
 	return questionIndex;
+}
+
+function clearQuestions(){
+	questions = [];
 }
