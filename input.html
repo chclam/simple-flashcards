@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Bootleg WRTS! Woordjes leren, bitch.</title>
+		<link rel="stylesheet" type="text/css" href="./style.css">
+		<script type="text/javascript" src="./index.js"></script>
+	</head>
+	<body>
+		<div>
+			<div>
+				<div id="questionIndex">
+					<a href="#">1</a>
+				</div>
+				<p id="text1">Enter your question!</p>
+				<textarea id="inputArea" rows='20' cols='60'></textarea>
+			</div>
+			<button type="button" onclick="next()">Save & Next</button>
+			<button type='button' onclick="clearQuestions()">Clear Questions</button>
+		</div>
+		<script>
+			function next(){
+				addQuestion(document.getElementById('inputArea').value);
+				document.getElementById('inputArea').value = ''; //Empty text area
+
+				//Append a question index.
+				/*
+					TO DO:
+						- Limit question index to at most 3.
+							parenNode.childElementCount, returns the amount of child elements.
+				*/
+				let element = document.getElementById("questionIndex");
+				let qRef = document.createElement("a");
+				let qIndex = document.createTextNode(getQuestionIndex() + 1);
+				qRef.setAttribute("href", "#");
+				qRef.appendChild(qIndex);
+				element.appendChild(qRef);
+			}
+
+
+			function openQuestion(){
+
+			}
+		</script>
+	</body>
+	<footer>
+	<p>Copyright © Chris Lam 
+		<script>
+			let date = new Date;
+			document.write(date.getFullYear());
+		</script>
+	</p>
+</footer>
+</html> 

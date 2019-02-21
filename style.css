@@ -1,0 +1,37 @@
+body {
+	font-family: Helvetica, Arial, sans-serif;
+	padding: 10%;
+	padding-left: 20%;
+	background-color: #1c4372;
+}
+
+h1, h2, h3, p {
+	color: white;
+}
+
+.homeMenu a {
+	color: white;
+	padding: 10px;
+	text-indent: 30px;
+	text-decoration: none;
+	display: block;
+
+}
+
+.homeMenu a:hover {
+	color: black;
+	background-color: white;
+}
+
+#questionIndex a {
+	font-size: 25px;
+	color: white;
+	padding: 10px;
+	text-decoration: none;
+	display: inline-block;
+}
+
+#questionIndex a:hover {
+	color: black;
+	background-color: white;
+}
