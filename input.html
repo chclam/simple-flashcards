@@ -19,36 +19,59 @@ Github: https://github.com/chclam
 				<p id="text1">Enter your question!</p>
 				<textarea id="inputArea" rows='20' cols='60'></textarea>
 			</div>
-			<button type="button" onclick="next()">Save & Next</button>
+			<button type="button" onclick="newQuestion()">New Question</button>
 			<button type='button' onclick="clearQuestions()">Clear Questions</button>
 		</div>
 		<script>
-			function next(){
-				addQuestion(document.getElementById('inputArea').value);
-				document.getElementById('inputArea').value = ''; //Empty text area
+			var currentIndex = 0;
+			var selectedIndex = 0;
 
-				//Append a question index.
+
+			//To next question entry and append a question index.
+			function newQuestion(){
+				// Store question to the array.
+				storeQuestion(document.getElementById("inputArea").value, selectedIndex);
+
+				//Check if there is an empty entry.
+				if(!getQuestion(currentIndex)){
+					openQuestion(currentIndex);
+					throw "Empty entry window";
+				}
+				currentIndex++;
+				selectedIndex = currentIndex;
+				document.getElementById('inputArea').value = null; //Empty text area				
 				/*
 					TO DO:
-						- Limit question index to at most 3.
+						- Limit question index to at most 10.
 							parenNode.childElementCount, returns the amount of child elements.
 				*/
-				let newQuestionIndex = getQuestionIndex();
+				appendIndex();
+			}
+
+
+			//Append a question index. (Number block at the top of the page.)
+			function appendIndex(){
 				let element = document.getElementById("questionIndex");
 				let qRef = document.createElement("a");
-				let qIndex = document.createTextNode(newQuestionIndex + 1);
+				let qIndex = document.createTextNode(currentIndex + 1);
 				qRef.setAttribute("href", "#");
-				qRef.setAttribute("onclick", "openQuestion(" + newQuestionIndex + ")");
+				qRef.setAttribute("onclick", "openQuestion(" + currentIndex + ")");
 				qRef.appendChild(qIndex);
 				element.appendChild(qRef);
 			}
 
 
+
 			function openQuestion(indexNumber){
-				question = getQuestion(indexNumber);
-				if (question){
-					document.getElementById("inputArea").value = getQuestion(indexNumber)
-				}
+				let question = getQuestion(indexNumber);
+				storeQuestion(document.getElementById("inputArea").value, selectedIndex);
+				document.getElementById("inputArea").value = question;
+				selectedIndex = indexNumber;
+			}
+
+			// To do: give the selected question a white background. Using var. selectedIndex.
+			function highlightSelected(){
+
 			}
 		</script>
 	</body>

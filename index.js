@@ -4,7 +4,6 @@ Github: https://github.com/chclam
 */
 
 var questions = [];
-var questionIndex = 0;
 
 function changeText(){
 	if (questions.length == 0){
@@ -14,24 +13,21 @@ function changeText(){
 	return questions[i];
 }
 
-function getQuestion(inquiredIndex){
-	return questions[inquiredIndex];
+function getQuestion(selectedIndex){
+	return questions[selectedIndex];
 }
 
-function addQuestion(newQuestion){
-	if (!newQuestion){
-		alert("Please enter a question.");
-		throw "Question is empty.";
-	}
-	questionIndex++;
-	questions.push(newQuestion);
-	console.log(questions);
+function storeQuestion(newQuestion, currentIndex){
+		questions[currentIndex] = newQuestion;
+		console.log(questions);
 }
 
-function getQuestionIndex(){
-	return questionIndex;
+function getQuestions(){
+	return questions;
 }
 
 function clearQuestions(){
 	questions = [];
 }
+
+
