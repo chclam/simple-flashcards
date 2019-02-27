@@ -6,7 +6,7 @@ Github: https://github.com/chclam
 var questions = [];
 
 function changeText(){
-	if (questions.length == 0){
+	if (questions.length === 0){
 		return "There are no questions!";
 	}
 	let i = Math.floor(Math.random() * questions.length);

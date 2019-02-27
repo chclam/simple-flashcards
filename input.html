@@ -61,8 +61,10 @@ Github: https://github.com/chclam
 			}
 
 
-
 			function openQuestion(indexNumber){
+				if (currentIndex === 0){
+					throw "Questions undefined";
+				}
 				let question = getQuestion(indexNumber);
 				storeQuestion(document.getElementById("inputArea").value, selectedIndex);
 				document.getElementById("inputArea").value = question;
