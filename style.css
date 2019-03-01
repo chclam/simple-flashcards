@@ -24,6 +24,10 @@ h1, h2, h3, p {
 
 }
 
+#entryScreen {
+	display: none;
+}
+
 .homeMenu a:hover {
 	color: black;
 	background-color: white;
