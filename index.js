@@ -3,31 +3,44 @@ Author: Chris Lam
 Github: https://github.com/chclam
 */
 
-var questions = [];
+var questionSet = new Object();
 
-function changeText(){
-	if (questions.length === 0){
-		return "There are no questions!";
-	}
-	let i = Math.floor(Math.random() * questions.length);
-	return questions[i];
+function setQuestionTitle(newTitle){
+	questionSet.title = newTitle;
+}
+
+function getQuestionTitle(newTitle){
+	return questionSet.title;
 }
 
 function getQuestion(selectedIndex){
-	return questions[selectedIndex];
+	return questionSet.questions[selectedIndex];
 }
 
-function storeQuestion(newQuestion, currentIndex){
-		questions[currentIndex] = newQuestion;
-		console.log(questions);
+function setQuestion(newQuestion, currentIndex){
+	if (!questionSet.questions){
+		questionSet.questions = [];
+	}
+	questionSet.questions[currentIndex] = newQuestion;
+	console.log(questionSet.title)		
+	console.log(questionSet.questions);
 }
 
+// Save questions to a .txt file.
+function saveQuestions(){
+	let s = txt.CreateTextFile("./test.txt", True);
+	questionSet.questions.forEach(function(question) {
+		s.writeline(question + ",");
+	});
+}
+
+//Get array of all the questions.
 function getQuestions(){
-	return questions;
+	return questionSet.questions;
 }
 
 function clearQuestions(){
-	questions = [];
+	questionSet.questions = [];
 }
 
 

@@ -1,84 +1,110 @@
 <!-- 
 Author: Chris Lam
 Github: https://github.com/chclam
-  -->
+ -->
 
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8">
 		<title>Simple Flashcards</title>
 		<link rel="stylesheet" type="text/css" href="./style.css">
 		<script type="text/javascript" src="./index.js"></script>
 	</head>
 	<body>
-		<div>
+
+		<div id ="titleScreen">
+			<h1>New Question Set</h1>
+			<p>Please give a <b>title</b> to your new question set.</p>
+			<input type="text" id = "titleInput" placeholder="Enter a title."></textarea>
+			<button type="button" onclick="(startEntrySession(titleInput.value))">Start</button>
+		</div>
+
+		<div id="entryScreen">
+			<h1>Question Entry</h1>
+			<p id="entryInstruction"></p>
+			<div id="questionIndex">
+				<a href="#" onclick="openQuestion(0); return false;">1</a>
+			</div>
 			<div>
-				<div id="questionIndex">
-					<a href="#" onclick="openQuestion(0); return false;">1</a>
-				</div>
-				<p id="text1">Enter your question!</p>
-				<textarea id="inputArea" rows='20' cols='60'></textarea>
+				<textarea id="questionInputArea" rows='15' cols='60' placeholder="Enter a question."></textarea>
 			</div>
 			<button type="button" onclick="newQuestion()">New Question</button>
 			<button type='button' onclick="clearQuestions()">Clear Questions</button>
+			<button type='button' onclick="saveQuestions()">Save Questions</button>
 		</div>
+
 		<script>
-			var currentIndex = 0;
+			var maxIndex = 0;
 			var selectedIndex = 0;
+
+			function startEntrySession(questionTitle){
+				if (!questionTitle){
+					throw "No title assigned.";
+				}
+				setQuestionTitle(questionTitle);
+				let instructionText = document.createTextNode("Enter your questions for " + getQuestionTitle() + ".");
+				let instructionElement = document.getElementById("entryInstruction");
+				instructionElement.appendChild(instructionText);
+
+				// Hide title entry screen and show entry screen.
+				document.getElementById("titleScreen").style.display = "none";
+				document.getElementById("entryScreen").style.display = "block";
+			}
 
 
 			//To next question entry and append a question index.
 			function newQuestion(){
-				// Store question to the array.
-				storeQuestion(document.getElementById("inputArea").value, selectedIndex);
+				setQuestion(document.getElementById("questionInputArea").value, selectedIndex);
 
-				//Check if there is an empty entry.
-				if(!getQuestion(currentIndex)){
-					openQuestion(currentIndex);
+				//Check if there is an empty entry and open the empty entry if that is the case.
+				if(!getQuestion(maxIndex)){
+					openQuestion(maxIndex);
 					throw "Empty entry window";
 				}
-				currentIndex++;
-				selectedIndex = currentIndex;
-				document.getElementById('inputArea').value = null; //Empty text area				
+				maxIndex++;
+				selectedIndex = maxIndex;
+				document.getElementById('questionInputArea').value = null; //Empty text area				
 				/*
 					TO DO:
 						- Limit question index to at most 10.
 							parenNode.childElementCount, returns the amount of child elements.
 				*/
-				appendIndex();
-			}
-
-
-			//Append a question index. (Number block at the top of the page.)
-			function appendIndex(){
+				//Append Index.(Number block at the top of the page.)
 				let element = document.getElementById("questionIndex");
 				let qRef = document.createElement("a");
-				let qIndex = document.createTextNode(currentIndex + 1);
+				let qIndex = document.createTextNode(maxIndex + 1);
 				qRef.setAttribute("href", "#");
-				qRef.setAttribute("onclick", "openQuestion(" + currentIndex + ")");
+				qRef.setAttribute("onclick", "openQuestion(" + maxIndex + ")");
 				qRef.appendChild(qIndex);
 				element.appendChild(qRef);
 			}
 
 
 			function openQuestion(indexNumber){
-				if (currentIndex === 0){
+				if (maxIndex === 0){
 					throw "Questions undefined";
 				}
-				let question = getQuestion(indexNumber);
-				storeQuestion(document.getElementById("inputArea").value, selectedIndex);
-				document.getElementById("inputArea").value = question;
+				let textAreaValue = document.getElementById("questionInputArea").value;
+				setQuestion(textAreaValue, selectedIndex);
+				document.getElementById("questionInputArea").value = getQuestion(indexNumber);
 				selectedIndex = indexNumber;
 			}
+
 
 			// To do: give the selected question a white background. Using var. selectedIndex.
 			function highlightSelected(){
 
 			}
+
+
+			function endSession(){
+				saveQuestion();
+			}
 		</script>
 	</body>
 	<footer>
-	<p>Copyright © Chris Lam 2019
+	<p>Copyright &copy; Chris Lam 2019
 	</p>
 </footer>
 </html> 
