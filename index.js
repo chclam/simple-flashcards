@@ -40,7 +40,7 @@ function getQuestions(){
 }
 
 function clearQuestions(){
-	questionSet.questions = [];
+	questionSet.questions.length = 0;
 }
 
 
