@@ -3,47 +3,49 @@ Author: Chris Lam
 Github: https://github.com/chclam
 */
 
-var questionSet = new Object();
 
-function setQuestionTitle(newTitle){
-	questionSet.title = newTitle;
-}
+class QuestionSet {
 
-function getQuestionTitle(newTitle){
-	return questionSet.title;
-}
-
-function getQuestion(selectedIndex){
-	return questionSet.questions[selectedIndex];
-}
-
-function setQuestion(newQuestion, newAnswer, currentIndex){
-	if (questionSet.questions == null){
-		questionSet.questions = [];
+	constructor(title){
+		this.title = title;
+		this.questions = []
 	}
-	questionSet.questions[currentIndex] = {
-		question: newQuestion,
-	 	answer: newAnswer
-	};
-	console.log(questionSet.title);		
-	console.log(questionSet.questions);
-}
 
-// Save questions to a .txt file.
-function saveQuestions(){
-	let s = txt.CreateTextFile("./test.txt", True);
-	questionSet.questions.forEach(function(question) {
-		s.writeline(question + ",");
-	});
-}
+	setQuestionTitle(newTitle) {
+		this.title = newTitle;
+	}
 
-//Get array of all the questions.
-function getQuestions(){
-	return questionSet.questions;
-}
+	getQuestionTitle(){
+		return this.title;
+	}
 
-function clearQuestions(){
-	questionSet.questions.length = 0;
+	getQuestion(selectedIndex){
+		return this.questions[selectedIndex];
+	}
+
+	setQuestion(newQuestion, newAnswer, currentIndex){
+		this.questions[currentIndex] = {
+			question: newQuestion,
+		 	answer: newAnswer
+		};
+		console.log(questionSet.title);		
+		console.log(questionSet.questions);
+	}
+
+	saveQuestions(){
+		let s = txt.CreateTextFile("./test.txt", True);
+		questionSet.questions.forEach(function(question) {
+			s.writeline(question + ",");
+		});
+	}
+
+	getQuestions(){
+		return this.questions;
+	}
+
+	clearQuestions(){
+		this.questions.length = 0;
+	}
 }
 
 

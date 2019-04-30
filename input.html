@@ -37,13 +37,15 @@ Github: https://github.com/chclam
 		<script type = "text/javascript">
 			var maxIndex = 0;
 			var selectedIndex = 0;
+			var questionSet;
 
-			function startEntrySession(questionTitle){
-				if (!questionTitle){
+			function startEntrySession(title){
+				title = title.trim();
+				if (title.length === 0){
 					throw "No title assigned.";
 				}
-				setQuestionTitle(questionTitle);
-				let instructionText = document.createTextNode("Enter your questions for " + getQuestionTitle() + ".");
+				questionSet = new QuestionSet(title);
+				let instructionText = document.createTextNode("Enter your questions for " + questionSet.getQuestionTitle() + ".");
 				let instructionElement = document.getElementById("entryInstruction");
 				instructionElement.appendChild(instructionText);
 
@@ -55,20 +57,28 @@ Github: https://github.com/chclam
 
 			//To next question entry and append a question index.
 			function newQuestion(){
+
 				let newQuestion = document.getElementById("questionInputArea").value;
 				let newAnswer = document.getElementById("answerInputArea").value;
-				setQuestion(newQuestion, newAnswer, selectedIndex);
+				questionSet.setQuestion(newQuestion, newAnswer, selectedIndex);
 
-				//console.log(String(maxIndex) + String(getQuestion(maxIndex).question == ""))
+				newQuestion = newQuestion.trim();
+				newAnswer = newAnswer.trim();
+
 				//Check if there is an empty entry and open the empty entry if that is the case.
-				if(getQuestion(maxIndex).question == "" || getQuestion(maxIndex).answer == ""){
+
+				let lastQuestionPair = questionSet.getQuestion(maxIndex);
+
+				if(lastQuestionPair.question.length === 0 || lastQuestionPair.answer.length === 0){
 					openQuestion(maxIndex);
-					throw "Please enter a question and answer.";
+					throw "Please enter both a question and an answer.";
 				}
+
 				maxIndex++;
 				selectedIndex = maxIndex;
-				document.getElementById('questionInputArea').value = null; //Empty text area				
-				document.getElementById('answerInputArea').value = null; //Empty text area				
+
+				document.getElementById('questionInputArea').value = null;
+				document.getElementById('answerInputArea').value = null; 		
 
 				/*
 					TO DO:
@@ -79,6 +89,7 @@ Github: https://github.com/chclam
 				let element = document.getElementById("questionIndex");
 				let qRef = document.createElement("a");
 				let qIndex = document.createTextNode(maxIndex + 1);
+
 				qRef.setAttribute("href", "#");
 				qRef.setAttribute("onclick", "openQuestion(" + maxIndex + ")");
 				qRef.appendChild(qIndex);
@@ -93,8 +104,8 @@ Github: https://github.com/chclam
 				let questionAreaValue = document.getElementById("questionInputArea").value;
 				let answerAreaValue = document.getElementById("answerInputArea").value;
 
-				setQuestion(questionAreaValue, answerAreaValue, selectedIndex);
-				let questionPair = getQuestion(indexNumber);
+				questionSet.setQuestion(questionAreaValue, answerAreaValue, selectedIndex);
+				let questionPair = questionSet.getQuestion(indexNumber);
 				document.getElementById("questionInputArea").value = questionPair.question;
 				document.getElementById("answerInputArea").value = questionPair.answer;
 				selectedIndex = indexNumber;
@@ -102,10 +113,9 @@ Github: https://github.com/chclam
 
 
 			// To do: give the selected question a white background. Using var. selectedIndex.
-			function highlightSelected(){
+			// function highlightSelected(){
 
-			}
-
+			// }
 
 			function endSession(){
 				saveQuestion();
