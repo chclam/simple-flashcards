@@ -17,12 +17,15 @@ function getQuestion(selectedIndex){
 	return questionSet.questions[selectedIndex];
 }
 
-function setQuestion(newQuestion, currentIndex){
-	if (!questionSet.questions){
+function setQuestion(newQuestion, newAnswer, currentIndex){
+	if (questionSet.questions == null){
 		questionSet.questions = [];
 	}
-	questionSet.questions[currentIndex] = newQuestion;
-	console.log(questionSet.title)		
+	questionSet.questions[currentIndex] = {
+		question: newQuestion,
+	 	answer: newAnswer
+	};
+	console.log(questionSet.title);		
 	console.log(questionSet.questions);
 }
 

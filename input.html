@@ -16,10 +16,9 @@ Github: https://github.com/chclam
 		<div id ="titleScreen">
 			<h1>New Question Set</h1>
 			<p>Please give a <b>title</b> to your new question set.</p>
-			<input type="text" id = "titleInput" placeholder="Enter a title."></textarea>
+			<input type="text" id ="titleInput" placeholder="Enter a title."></textarea>
 			<button type="button" onclick="(startEntrySession(titleInput.value))">Start</button>
 		</div>
-
 		<div id="entryScreen">
 			<h1>Question Entry</h1>
 			<p id="entryInstruction"></p>
@@ -28,6 +27,7 @@ Github: https://github.com/chclam
 			</div>
 			<div>
 				<textarea id="questionInputArea" rows='15' cols='60' placeholder="Enter a question."></textarea>
+				<textarea id="answerInputArea" rows='15' cols='60' placeholder="Enter your answer to the question."></textarea>
 			</div>
 			<button type="button" onclick="newQuestion()">New Question</button>
 			<button type='button' onclick="clearQuestions()">Clear Questions</button>
@@ -55,16 +55,21 @@ Github: https://github.com/chclam
 
 			//To next question entry and append a question index.
 			function newQuestion(){
-				setQuestion(document.getElementById("questionInputArea").value, selectedIndex);
+				let newQuestion = document.getElementById("questionInputArea").value;
+				let newAnswer = document.getElementById("answerInputArea").value;
+				setQuestion(newQuestion, newAnswer, selectedIndex);
 
+				//console.log(String(maxIndex) + String(getQuestion(maxIndex).question == ""))
 				//Check if there is an empty entry and open the empty entry if that is the case.
-				if(!getQuestion(maxIndex)){
+				if(getQuestion(maxIndex).question == "" || getQuestion(maxIndex).answer == ""){
 					openQuestion(maxIndex);
-					throw "Empty entry window";
+					throw "Please enter a question and answer.";
 				}
 				maxIndex++;
 				selectedIndex = maxIndex;
 				document.getElementById('questionInputArea').value = null; //Empty text area				
+				document.getElementById('answerInputArea').value = null; //Empty text area				
+
 				/*
 					TO DO:
 						- Limit question index to at most 10.
@@ -85,9 +90,13 @@ Github: https://github.com/chclam
 				if (maxIndex === 0){
 					throw "Questions undefined";
 				}
-				let textAreaValue = document.getElementById("questionInputArea").value;
-				setQuestion(textAreaValue, selectedIndex);
-				document.getElementById("questionInputArea").value = getQuestion(indexNumber);
+				let questionAreaValue = document.getElementById("questionInputArea").value;
+				let answerAreaValue = document.getElementById("answerInputArea").value;
+
+				setQuestion(questionAreaValue, answerAreaValue, selectedIndex);
+				let questionPair = getQuestion(indexNumber);
+				document.getElementById("questionInputArea").value = questionPair.question;
+				document.getElementById("answerInputArea").value = questionPair.answer;
 				selectedIndex = indexNumber;
 			}
 
