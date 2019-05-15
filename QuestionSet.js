@@ -6,17 +6,17 @@ Github: https://github.com/chclam
 
 class QuestionSet {
 
-	constructor(title){
-		this.title = title;
+	constructor(){
+		this.title;
 		this.questions = []
-	}
-
-	setQuestionTitle(newTitle) {
-		this.title = newTitle;
 	}
 
 	getQuestionTitle(){
 		return this.title;
+	}
+
+	setQuestionTitle(newTitle) {
+		this.title = newTitle;
 	}
 
 	getQuestion(selectedIndex){
@@ -32,15 +32,15 @@ class QuestionSet {
 		console.log(questionSet.questions);
 	}
 
+	getQuestions(){
+		return this.questions;
+	}
+
 	saveQuestions(){
 		let s = txt.CreateTextFile("./test.txt", True);
 		questionSet.questions.forEach(function(question) {
 			s.writeline(question + ",");
 		});
-	}
-
-	getQuestions(){
-		return this.questions;
 	}
 
 	clearQuestions(){
